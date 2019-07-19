@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * 初始化Redis的参数
+ * Redis配置文件的参数
  *
  * @author qp
  * @date 2019/7/19 17:35
