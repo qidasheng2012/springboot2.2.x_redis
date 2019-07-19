@@ -7,6 +7,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 测试Redis的controller
+ *
  * @author qp
  * @date 2019/7/19 9:50
  */

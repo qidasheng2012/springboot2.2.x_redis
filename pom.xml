@@ -59,6 +59,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- 支持 @ConfigurationProperties 注解 读取properties或yml配置文件中的值 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>

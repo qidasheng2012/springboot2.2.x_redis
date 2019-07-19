@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 分布式Redis锁
+ *
  * @author qp
  * @date 2019/7/19 15:21
  */
@@ -59,9 +61,4 @@ public class DistributedRedisLock {
         }
     }
 
-    public static void main(String[] args) {
-        for (int i = 0; i < 1; i++) {
-            new Thread(new RedissionTestRunnable()).start();
-        }
-    }
 }
