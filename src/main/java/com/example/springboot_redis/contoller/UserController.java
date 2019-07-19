@@ -36,14 +36,14 @@ public class UserController {
     // 保存对象
     @PostMapping("/postEntity")
     public String postEntity(@RequestBody User user) {
-        redisTemplate.opsForValue().set(user.getId(), user);
+        redisTemplate.opsForValue().set(user.getUserCode(), user);
         return "SUCCESS";
     }
 
     // 获取对象
     @GetMapping("/getEntity/{key}")
-    public Object getEntity(@PathVariable(name = "key") Integer key) {
-        return redisTemplate.opsForValue().get(key);
+    public User getEntity(@PathVariable(name = "key") String key) {
+        return (User) redisTemplate.opsForValue().get(key);
     }
 
 }
