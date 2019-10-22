@@ -1,4 +1,4 @@
-package com.example.springboot_redis.model;
+package com.example.springboot_redis.domain;
 
 import lombok.Data;
 
