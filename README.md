@@ -1,6 +1,5 @@
+- SpringBoot2.2.x整合Redis
 
-1、SpringBoot2.x整合Redis
+- SpringBoot2.2.x整合Redisson(用于分布式锁)
 
-2、SpringBoot2.x整合Redisson(用于分布式锁)
-
-3、SpringBoot2.x整合自定义注解
+- SpringBoot2.2.x整合自定义注解
