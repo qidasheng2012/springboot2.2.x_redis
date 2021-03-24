@@ -1,14 +1,13 @@
 package com.example.springboot_redis.token;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +41,7 @@ public class TokenAspect {
 
         String msg = actionToken.tokenVerify(request.getParameter("token"));
 
-        if (StringUtils.isBlank(msg)) {
+        if (!StringUtils.hasText(msg)) {
             // 删除token成功，进入业务逻辑
             try {
                 return joinPoint.proceed();
@@ -50,17 +49,13 @@ public class TokenAspect {
                 log.error("删除token成功，业务处理异常:", e);
             }
         } else {
-            PrintWriter printWriter = null;
-            try {
+            try (PrintWriter printWriter = response.getWriter()) {
                 response.setCharacterEncoding("utf-8");
                 response.setContentType("text/html;charset=utf-8");
-                printWriter = response.getWriter();
                 printWriter.write(msg);
                 printWriter.flush();
             } catch (Exception e) {
                 log.error("处理token，返回错误信息时异常", e);
-            } finally {
-                IOUtils.closeQuietly(printWriter);
             }
         }
 

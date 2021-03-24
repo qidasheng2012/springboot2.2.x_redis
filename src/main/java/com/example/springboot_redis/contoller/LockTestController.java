@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 分布式Redis锁测试controller
- *
- * @author qp
- * @date 2019/7/19 17:30
  */
 @RestController
 @RequestMapping("/lock")
@@ -23,11 +20,8 @@ public class LockTestController {
     @GetMapping("/testLock")
     public void testLock() {
         for (int i = 0; i < 5; i++) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Boolean lockFlag = distributedRedisLock.lock("LOCK");
-                }
+            new Thread(() -> {
+                distributedRedisLock.lock("LOCK");
             }).start();
         }
     }

@@ -1,10 +1,10 @@
 package com.example.springboot_redis.token;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +26,7 @@ public class ActionToken {
      * 生成token
      */
     public String createToken(String sessionId) {
-        if (StringUtils.isBlank(sessionId)) {
+        if (!StringUtils.hasText(sessionId)) {
             return null;
         }
 
@@ -35,7 +35,7 @@ public class ActionToken {
         // 存入缓存并设置有效期 TimeUnit.SECONDS 单位：秒
         stringRedisTemplate.opsForValue().set(token, sessionId, TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
 
-        if (StringUtils.isBlank(stringRedisTemplate.opsForValue().get(token))) {
+        if (!StringUtils.hasText(stringRedisTemplate.opsForValue().get(token))) {
             throw new RuntimeException("生成token缓存redis失败");
         }
 
@@ -46,13 +46,13 @@ public class ActionToken {
      * 校验token
      */
     public String tokenVerify(String token) {
-        if (StringUtils.isBlank(token)) {
+        if (!StringUtils.hasText(token)) {
             log.info("token 为空");
             return "请勿重复提交";
         }
 
         String sessionId = stringRedisTemplate.opsForValue().get(token);
-        if (StringUtils.isBlank(sessionId)) {
+        if (!StringUtils.hasText(sessionId)) {
             log.info("Redis 中 key 为 token 的不存在");
             return "请勿重复提交";
         }
