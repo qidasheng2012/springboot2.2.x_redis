@@ -5,8 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author qp
- * @date 2019/7/19 9:47
+ * 用户实体类
  */
 @Data
 public class User implements Serializable {
