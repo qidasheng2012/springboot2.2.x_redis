@@ -10,9 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 分布式Redis锁
- *
- * @author qp
- * @date 2019/7/19 15:21
  */
 @Slf4j
 @Component
@@ -23,12 +20,12 @@ public class DistributedRedisLock {
 
     // 加锁
     public Boolean lock(String lockName) {
-        try {
-            if (redissonClient == null) {
-                log.info("DistributedRedisLock redissonClient is null");
-                return false;
-            }
+        if (redissonClient == null) {
+            log.info("DistributedRedisLock redissonClient is null");
+            return false;
+        }
 
+        try {
             RLock lock = redissonClient.getLock(lockName);
             // 锁10秒后自动释放，防止死锁
             lock.lock(10, TimeUnit.SECONDS);
@@ -44,12 +41,12 @@ public class DistributedRedisLock {
 
     // 释放锁
     public Boolean unlock(String lockName) {
-        try {
-            if (redissonClient == null) {
-                log.info("DistributedRedisLock redissonClient is null");
-                return false;
-            }
+        if (redissonClient == null) {
+            log.info("DistributedRedisLock redissonClient is null");
+            return false;
+        }
 
+        try {
             RLock lock = redissonClient.getLock(lockName);
             lock.unlock();
             log.info("Thread [{}] DistributedRedisLock unlock [{}] success", Thread.currentThread().getName(), lockName);

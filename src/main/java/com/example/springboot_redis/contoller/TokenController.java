@@ -4,13 +4,10 @@ import com.example.springboot_redis.token.ActionToken;
 import com.example.springboot_redis.token.TokenVerify;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author qp
- * @date 2019/7/23 16:28
- */
 @Slf4j
 @RestController
 @RequestMapping("/token")
@@ -19,14 +16,13 @@ public class TokenController {
     @Autowired
     private ActionToken actionToken;
 
-    @RequestMapping("/createToken")
+    @GetMapping("/createToken")
     public String createToke() {
-        String sessionId = "123456";
-        return actionToken.createToken(sessionId);
+        return actionToken.createToken("123456");
     }
 
     @TokenVerify
-    @RequestMapping("/test")
+    @GetMapping("/test")
     public void testToken() {
         log.info("正常业务逻辑");
     }
