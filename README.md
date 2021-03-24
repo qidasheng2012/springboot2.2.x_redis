@@ -1,2 +1,1 @@
-# Springboot2.X_redis
-SpringBoot2.x整合Redis
+SpringBoot2.2.x整合Redis
