@@ -26,10 +26,16 @@ public class RedissionConfig {
     public RedissonClient redissonClient() {
         Config config = new Config();
         String url = REDISSON_PREFIX + redisProperties.getHost() + ":" + redisProperties.getPort();
+        // 这里以单台redis服务器为例
         config.useSingleServer()
                 .setAddress(url)
                 .setPassword(redisProperties.getPassword())
                 .setDatabase(redisProperties.getDatabase());
+
+        // 实际开发过程中应该为cluster或者哨兵模式，这里以cluster为例
+        //String[] urls = {"127.0.0.1:6379", "127.0.0.2:6379"};
+        //config.useClusterServers()
+        //        .addNodeAddress(urls);
 
         try {
             return Redisson.create(config);

@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>springboot2.x_redis</artifactId>
+    <artifactId>springboot2.2.x_redis</artifactId>
     <version>1.0.0</version>
     <name>springboot2.2.x_redis</name>
     <description>SpringBoot2.2.x demo project for Redis</description>
