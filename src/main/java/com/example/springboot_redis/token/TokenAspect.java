@@ -39,7 +39,9 @@ public class TokenAspect {
     @Around(value = "tokenPoint()")
     public Object tokenVerify(ProceedingJoinPoint joinPoint) throws Throwable {
 
-        String msg = actionToken.tokenVerify(request.getParameter("token"));
+        String token = request.getHeader("token");
+        String msg = actionToken.tokenVerify(token);
+        PrintWriter printWriter = null;
 
         if (!StringUtils.hasText(msg)) {
             // 删除token成功，进入业务逻辑
@@ -49,13 +51,18 @@ public class TokenAspect {
                 log.error("删除token成功，业务处理异常:", e);
             }
         } else {
-            try (PrintWriter printWriter = response.getWriter()) {
+            try {
                 response.setCharacterEncoding("utf-8");
                 response.setContentType("text/html;charset=utf-8");
+                printWriter = response.getWriter();
                 printWriter.write(msg);
                 printWriter.flush();
             } catch (Exception e) {
                 log.error("处理token，返回错误信息时异常", e);
+            } finally {
+                if (printWriter != null) {
+                    printWriter.close();
+                }
             }
         }
 
