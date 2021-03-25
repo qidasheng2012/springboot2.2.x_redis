@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
  * 用户信息Mapper
  */
 public interface UserMapper extends BaseMapper<User> {
-    @Select("select * from user where user_code = #{userCode} limit 1")
+    @Select("select id, user_code as userCode, name, age from user where user_code = #{userCode} limit 1")
     User selectByUserCode(String userCode);
 
     @Delete("delete from user where user_code = #{userCode} limit 1")
