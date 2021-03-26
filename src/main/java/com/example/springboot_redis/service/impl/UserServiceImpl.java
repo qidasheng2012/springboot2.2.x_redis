@@ -5,6 +5,7 @@ import com.example.springboot_redis.mapper.UserMapper;
 import com.example.springboot_redis.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,14 +13,14 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@CacheConfig(cacheNames = "USER")
 public class UserServiceImpl implements UserService {
-    private final String CACHE_KEY = "USER";
 
     @Autowired
     private UserMapper userMapper;
 
     @Override
-    @CachePut(key = "#user.userCode", value = CACHE_KEY)
+    @CachePut(key = "#user.userCode")
     public User save(User user) {
         log.info("保存用户");
         userMapper.insert(user);
@@ -27,14 +28,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(key = "#userCode", value = CACHE_KEY)
+    @Cacheable(key = "#userCode")
     public User get(String userCode) {
         log.info("获取用户userCode = {}", userCode);
         return userMapper.selectByUserCode(userCode);
     }
 
     @Override
-    @CachePut(key = "#user.userCode", value = CACHE_KEY)
+    @CachePut(key = "#user.userCode")
     public User update(User user) {
         log.info("更新用户userCode = {}", user.getUserCode());
         userMapper.updateById(user);
@@ -42,11 +43,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CacheEvict(key = "#userCode", value = CACHE_KEY)
+    @CacheEvict(key = "#userCode")
     public void delete(String userCode) {
         log.info("删除用户userCode = {}", userCode);
         userMapper.deleteByUserCode(userCode);
     }
-
 
 }
