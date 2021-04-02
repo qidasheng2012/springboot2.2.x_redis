@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@TableName("user")
+@TableName("t_user")
 public class User implements Serializable {
     // 主键
     @TableId(type = IdType.AUTO)
